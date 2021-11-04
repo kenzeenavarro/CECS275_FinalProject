@@ -9,7 +9,9 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <sstream>
 #include "Blackjack.h"
+
 
 /*
 * @param ex1       instance of Date class
@@ -17,21 +19,29 @@
 * @param day       int day to hold user input of day
 * @param year      int year to hold user input of year
 */
-
+int askAccount();
+float askBet();
 int main(){
-    //setAccount(askAccount());
-    //setBet(askBet());
+    Blackjack blackjack = Blackjack();
+    //blackjack.setAccount(askAccount());
+    blackjack.setBet(askBet());
+    cout <<  blackjack.bet_money <<endl;
+
+    //cout << blackjack.account_num<<endl;
+    //cout << blackjack.bet_money <<endl;
+    //blackjack.getAccountInfo();
+    blackjack.updateinfo();
+    cout << "Account nuM: "<<blackjack.account_num << endl;
+    cout<<"BALCANCE: "<<blackjack.balance<<endl;
+    cout << "Games Played: " <<    blackjack.games_played<< endl;
+    cout << "Total Loss: " <<  blackjack.total_loss << endl;
+    cout << "Total Won: "<<   blackjack.total_won <<endl;
+    blackjack.startGame();
 }
-    
-string askAccount(){
-    string account_num;
-    cout << "What is Account Number?";
-    cin >> account_num;
-    return account_num; 
-}
-int askBet(){
-    int bet;
-    cout << "What is Account Number?";
+
+float askBet(){
+    string bet;
+    cout << "What is your bet?";
     cin >> bet;
-    return bet; 
+    return stof(bet); 
 }
