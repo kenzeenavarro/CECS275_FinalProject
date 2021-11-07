@@ -23,6 +23,7 @@ const int QUIZ_SCORES = 10;
  *
  */
 #include <iostream>
+#include <vector>
 #include <string> 
 #include <map> //for dictionary equivalent in c++  
 using namespace std;
@@ -40,7 +41,7 @@ class Blackjack{
         mutable map<string,float> data;
         //void setAccount(int) const;
         void setBet(float) const;
-        void hit() const;
+        void hit(vector<int> &) const;
         void stand() const;
         void split() const;
         void startGame() const;
@@ -49,10 +50,27 @@ class Blackjack{
         void updateBalance() const;
         void getAccountInfo() const;
         void updateinfo() const;
+        int randnum() const;
+        void determine_winner(int) const;
 
 
 
     private:
+        mutable vector<int> deck;
+        mutable int sum_player;
+        mutable int sum_player_split;
+        mutable int sum_dealer;
+        mutable vector<int> numbers_player;
+        mutable vector<int> numbers_player_split;
+        mutable vector<int> numbers_dealer;
+        void update_sum_player() const;
+        void update_sum_dealer() const;
+        void show_one_Dealer() const;
+        void add_cards(int, vector<int>&) const;
+        void reveal_hand(string,vector<int> &) const;
+        void decision_choice(vector<int> &) const;
+        void update_sum_player_split() const;
+        
 
         
 };

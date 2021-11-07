@@ -19,29 +19,51 @@
 * @param day       int day to hold user input of day
 * @param year      int year to hold user input of year
 */
+char decision;
 int askAccount();
 float askBet();
+int bet_money_global;
+void play_again();
 int main(){
-    Blackjack blackjack = Blackjack();
-    //blackjack.setAccount(askAccount());
-    blackjack.setBet(askBet());
-    cout <<  blackjack.bet_money <<endl;
+    while(decision == 'y'){
+        decision = 'n';
+        Blackjack blackjack = Blackjack();
+        //blackjack.setAccount(askAccount());
+        bet_money_global = blackjack.balance;
+        blackjack.setBet(askBet());
 
-    //cout << blackjack.account_num<<endl;
-    //cout << blackjack.bet_money <<endl;
-    //blackjack.getAccountInfo();
-    blackjack.updateinfo();
-    cout << "Account nuM: "<<blackjack.account_num << endl;
-    cout<<"BALCANCE: "<<blackjack.balance<<endl;
-    cout << "Games Played: " <<    blackjack.games_played<< endl;
-    cout << "Total Loss: " <<  blackjack.total_loss << endl;
-    cout << "Total Won: "<<   blackjack.total_won <<endl;
-    blackjack.startGame();
+
+        // cout << "Account nuM: "<<blackjack.account_num << endl;
+        // cout<<"BALCANCE: "<<blackjack.balance<<endl;
+        // cout << "Games Played: " <<    blackjack.games_played<< endl;
+        // cout << "Total Loss: " <<  blackjack.total_loss << endl;
+        // cout << "Total Won: "<<   blackjack.total_won <<endl;
+
+        blackjack.startGame();
+        blackjack.updateinfo();
+        play_again();
+
+    }
+    
+    
+    
+
+
+    
 }
 
 float askBet(){
     string bet;
     cout << "What is your bet?";
     cin >> bet;
+    while (stof(bet) > bet_money_global){
+        cout << "Bet has to be less than Balance of: " << bet_money_global << endl;
+        cout << "New Bet: ";
+        cin >> bet;
+    }
     return stof(bet); 
+}
+void play_again(){
+    cout << "Would you like to play again (y/n)?: "<<endl;
+    cin >> decision;
 }
