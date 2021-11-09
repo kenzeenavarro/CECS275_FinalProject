@@ -25,36 +25,25 @@ float askBet();
 int bet_money_global;
 void play_again();
 int main(){
-    while(decision == 'y'){
-        decision = 'n';
+        decision = 'y';
         Blackjack blackjack = Blackjack();
-        //blackjack.setAccount(askAccount());
-        bet_money_global = blackjack.balance;
-        blackjack.setBet(askBet());
-
-
-        // cout << "Account nuM: "<<blackjack.account_num << endl;
-        // cout<<"BALCANCE: "<<blackjack.balance<<endl;
-        // cout << "Games Played: " <<    blackjack.games_played<< endl;
-        // cout << "Total Loss: " <<  blackjack.total_loss << endl;
-        // cout << "Total Won: "<<   blackjack.total_won <<endl;
-
-        blackjack.startGame();
-        blackjack.updateinfo();
-        play_again();
-
-    }
-    
-    
-    
-
-
-    
+        while(decision == 'y'){
+            bet_money_global = blackjack.balance;
+            blackjack.setBet(askBet());
+            blackjack.startGame();
+            blackjack.updateinfo();
+            play_again();
+                if (decision == 'y'){
+                    blackjack.new_game();
+                }   
+        }
+        return 0;
 }
+    
 
 float askBet(){
     string bet;
-    cout << "What is your bet?";
+    cout << "What is your bet?: ";
     cin >> bet;
     while (stof(bet) > bet_money_global){
         cout << "Bet has to be less than Balance of: " << bet_money_global << endl;
@@ -66,4 +55,5 @@ float askBet(){
 void play_again(){
     cout << "Would you like to play again (y/n)?: "<<endl;
     cin >> decision;
+    
 }

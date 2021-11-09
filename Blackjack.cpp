@@ -23,10 +23,6 @@ using namespace std;
     void Blackjack::startGame() const{
         string decision;
         deck = {1,2,3,4,5,6,7,8,9,10,11,10,10,1,2,3,4,5,6,7,8,9,10,11,10,10,1,2,3,4,5,6,7,8,9,10,11,10,10,1,2,3,4,5,6,7,8,9,10,11,10,10};
-        //already asked for bet_money
-        // NOTE deck value global count
-        // NOTE sum of users card global
-        // NOTE
         //select tweo cards for user and show them (random and brand new deck 52 cards random)
         //select 2 cards again this time out of 50 and show one card
         
@@ -35,19 +31,23 @@ using namespace std;
         this->add_cards(2,numbers_dealer);      //adding 2 cards to dealer hand
         this->update_sum_player();              // updating sum varibale from player
         this->update_sum_dealer();
-        this->reveal_hand("player",numbers_player);            // show both players cards
-        this->show_one_Dealer();                // reveal one of dealers cards
+        this->reveal_hand("player",numbers_player);     // show both players cards
+        this->show_one_Dealer();                        // reveal one of dealers cards
         
         decision_choice(numbers_player);
         this->determine_winner(sum_player);  // determine winner
-        
-        //show value again and ask if user wants to hit or stand or split HitStandSplit()
-        // split it up into 3 different fuinctions
-        // take string and have if statement for each function of hit stand split 
 
     }
+    void Blackjack::new_game() const{
+        // new deck and clear hands of dealer and players (as well as split hand)
+        deck = {1,2,3,4,5,6,7,8,9,10,11,10,10,1,2,3,4,5,6,7,8,9,10,11,10,10,1,2,3,4,5,6,7,8,9,10,11,10,10,1,2,3,4,5,6,7,8,9,10,11,10,10};
+        numbers_player.erase(numbers_player.begin(),numbers_player.end());
+        numbers_dealer.erase(numbers_dealer.begin(),numbers_dealer.end());
+        numbers_player_split.erase(numbers_player_split.begin(),numbers_player_split.end());
+    }
 
-    Blackjack::Blackjack(){
+    Blackjack::Blackjack(){  
+        // when called automatically parses data from account.txt
         vector<string> info;
         fstream ifstream;
         fstream ofstream;
@@ -71,7 +71,7 @@ using namespace std;
             info.push_back(x);                          // adding list to 
             i++;
         }
-        
+        //updates varaibles with values found in text file
         account_num = info.at(0);
         balance = stof(info.at(1));
         games_played = stoi(info.at(2));
@@ -85,13 +85,10 @@ using namespace std;
         }
     
     }
-    // void Blackjack::setAccount(int num) const{
-    //     account_num = num;
-    // }
+
     void Blackjack::decision_choice(vector<int> &hand) const{
         string decision = HitStandSplit();
-        transform(decision.begin(), decision.end(), decision.begin(),[](unsigned char c){ return std::tolower(c); });  // lowering decision
-        
+        transform(decision.begin(), decision.end(), decision.begin(),[](unsigned char c){ return std::tolower(c); });  // lower case decision string
 
         if(decision == "hit"){
             this->hit(hand);
@@ -105,11 +102,10 @@ using namespace std;
         
     }
     void Blackjack::determine_winner(int sum) const{
-        // this->update_sum_dealer();
-        // this->update_sum_player();
-        // this->update_sum_player_split();
-
-
+        // determininfg winner comparing sums of player and dealer
+        // reason it is sum instead of sum_player is so i can resuse this function for split_hand and stil determine winner with one function 
+        // updates global bet_money variable with either negative or positive number depending on winnning or losing so can easily just add to balance varibale and append to txt file
+        // calls to update balance function which
         if(sum_dealer < 22 & (sum < 22) & (21-sum_dealer < 21-sum)){
             cout << "dealer wins"<<endl;
             bet_money = bet_money * -1;
@@ -145,21 +141,27 @@ using namespace std;
             }
     }
     void Blackjack::setBet(float bet) const{
+        // setting bet_money variable
         bet_money = bet;
     }
     
     string Blackjack::HitStandSplit() const{
+        // asking if hit stand or split and getting decision
         string decision;
         cout << "Hit Stand or Split?"<<endl;
         cin >> decision;
         return decision;
     }
+
     void Blackjack::hit(vector<int> &hand) const{
-        int sum =0;
+        // hit function takes parameter vector<int> so can use one function for hit of either split hand or main hand 
+        // updates sum 
+        int sum = 0;
         this->add_cards(1,hand);            // adding 1 card to player deck
         this->update_sum_player();          // updating sum varibale from player
         this->update_sum_player_split();
         this->reveal_hand("player",hand);
+
         for(int i =0;i<hand.size();i++){
             sum += hand.at(i);
         }
@@ -173,36 +175,24 @@ using namespace std;
                 this->hit(hand);    // hit again 
             }
             else{
-                //this->reveal_dealer();     // reveal remaining cards of dealer
-                this->reveal_hand("dealer",numbers_dealer);
-                //this->reveal_hand("player",numbers_player);
-                this->reveal_hand("player",hand);
-                //this->determine_winner();  // determine winner
+                this->reveal_hand("dealer",numbers_dealer);         // reveals cards of dealer
+                this->reveal_hand("player",hand);                   // reveal cards of player
             }
 
         }
         else{
-            //this->reveal_dealer();     // reveal remaining cards of dealer
-            this->reveal_hand("dealer",numbers_dealer);
-            //this->determine_winner();  // determine winner
-
-        }
-        // if sum hand < 21 then select another card from deck value (rest of whatever is left of deck)
-        // then if sum of al 3 cards are above 21 reveal remaining card of dealer and determine winnenr
-        
+            this->reveal_hand("dealer",numbers_dealer);             // reveals dealers hand if over 21
+        }   
     }
     void Blackjack::stand() const{
-        //this->reveal_player();
-        //this->reveal_dealer();     // reveal remaining cards of dealer
+        // reveal everyones hands
         this->reveal_hand("dealer",numbers_dealer);
         this->reveal_hand("player",numbers_player);
         this->reveal_hand("split",numbers_player_split);
-
-        //this->determine_winner();  // determine winner
     }
     void Blackjack::split() const{
-        this->add_cards(2,numbers_player_split);      //adding 2 cards to dealer hand
-        this->reveal_hand("dealer",numbers_dealer);
+        this->add_cards(2,numbers_player_split);                  // adding 2 cards to split hand vector
+        this->show_one_Dealer();                                  // reveal one of dealers cards        
         this->reveal_hand("player",numbers_player);
         this->reveal_hand("split",numbers_player_split);
 
@@ -219,9 +209,6 @@ using namespace std;
         this->decision_choice(numbers_player);          
     }
 
-    void Blackjack::continueGame() const{
-
-    }
     void Blackjack::updateBalance() const{   
         if(bet_money > 0){
             total_won += bet_money;
@@ -272,9 +259,6 @@ using namespace std;
         }
     }
     
-    void Blackjack::getAccountInfo()const{
-        
-    }
     int Blackjack::randnum() const{
         srand((unsigned) time(0));
         int randomNumber;

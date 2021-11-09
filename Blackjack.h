@@ -46,12 +46,11 @@ class Blackjack{
         void split() const;
         void startGame() const;
         string HitStandSplit() const;
-        void continueGame() const;
         void updateBalance() const;
-        void getAccountInfo() const;
         void updateinfo() const;
         int randnum() const;
         void determine_winner(int) const;
+        void new_game() const;
 
 
 
@@ -70,6 +69,7 @@ class Blackjack{
         void reveal_hand(string,vector<int> &) const;
         void decision_choice(vector<int> &) const;
         void update_sum_player_split() const;
+        
         
 
         
