@@ -18,11 +18,13 @@
 #include <cctype>
 #include <ctime>
 #include <cstdlib>
-
+// update split and vector of char cards 
+// update games played
 using namespace std;
     void Blackjack::startGame() const{
         string decision;
         deck = {1,2,3,4,5,6,7,8,9,10,11,10,10,1,2,3,4,5,6,7,8,9,10,11,10,10,1,2,3,4,5,6,7,8,9,10,11,10,10,1,2,3,4,5,6,7,8,9,10,11,10,10};
+        //deck = {1,2,3,4,5,6,7,8,9,10,11,10,10,1,2,3,4,5,6,7,8,9,10,11,10,10,1,2,3,4,5,6,7,8,9,10,11,10,10,1,2,3,4,5,6,7,8,9,10,11,10,10};
         //select tweo cards for user and show them (random and brand new deck 52 cards random)
         //select 2 cards again this time out of 50 and show one card
         
