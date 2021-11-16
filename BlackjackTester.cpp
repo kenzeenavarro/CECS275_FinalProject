@@ -24,9 +24,14 @@ int askAccount();
 float askBet();
 int bet_money_global;
 void play_again();
+string account_num();
 int main(){
         decision = 'y';
         Blackjack blackjack = Blackjack();
+        string account = account_num();
+        while(account != blackjack.account_num){
+            account = account_num();
+        }
         while(decision == 'y'){
             bet_money_global = blackjack.balance;
             blackjack.setBet(askBet());
@@ -38,6 +43,8 @@ int main(){
                 }   
         }
         return 0;
+
+        
 }
     
 
@@ -56,4 +63,10 @@ void play_again(){
     cout << "Would you like to play again (y/n)?: "<<endl;
     cin >> decision;
     
+}
+string account_num(){
+    string num;
+    cout << "What is account number: ";
+    cin >> num;
+    return num;
 }

@@ -30,7 +30,11 @@ using namespace std;
 
 class Blackjack{
     public:
-
+        struct Person{
+            mutable int sum;
+            mutable vector<int> hand;
+            mutable vector<char> char_value;
+        };
         Blackjack();
         mutable string account_num;
         mutable float balance;
@@ -41,7 +45,7 @@ class Blackjack{
         mutable map<string,float> data;
         //void setAccount(int) const;
         void setBet(float) const;
-        void hit(vector<int> &) const;
+        void hit(Person &) const;
         void stand() const;
         void split() const;
         void startGame() const;
@@ -49,26 +53,41 @@ class Blackjack{
         void updateBalance() const;
         void updateinfo() const;
         int randnum() const;
-        void determine_winner(int) const;
+        void determine_winner(Person &) const;
         void new_game() const;
 
 
 
     private:
         mutable vector<int> deck;
-        mutable int sum_player;
-        mutable int sum_player_split;
-        mutable int sum_dealer;
-        mutable vector<int> numbers_player;
-        mutable vector<int> numbers_player_split;
-        mutable vector<int> numbers_dealer;
-        void update_sum_player() const;
-        void update_sum_dealer() const;
+        mutable vector<char> deck_face;
+        mutable int sum_player,sum_player_split,sum_dealer;
+        //mutable vector<int> numbers_player, numbers_player_split,numbers_dealer;
+
+        // struct Person{
+        //     mutable vector<int> hand;
+        //     mutable vector<char> char_value;
+        // };
+
+        mutable Person numbers_player;
+        mutable Person numbers_player_split;
+        mutable Person numbers_dealer;
+        
+
+        mutable vector<char> numbers_player_value;
+        mutable vector<char> numbers_player_split_value;
+        mutable vector<char> numbers_dealer_value;
+
+
+        // void update_sum_player() const;
+        // void update_sum_dealer() const;
         void show_one_Dealer() const;
-        void add_cards(int, vector<int>&) const;
-        void reveal_hand(string,vector<int> &) const;
-        void decision_choice(vector<int> &) const;
-        void update_sum_player_split() const;
+        void add_cards(int, Person &) const;
+        void reveal_hand(string,Person &) const;
+        //void decision_choice(vector<int> &) const;
+        void decision_choice(Person &) const;
+        //void update_sum_player_split() const;
+        void update_sum(Person &) const;
         
         
 

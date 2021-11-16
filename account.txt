@@ -1,5 +1,5 @@
 Account Number: 12345678
-Current Balance: $1022.50
-Game Played: 0
-Total Amount Won: $175.00
-Total Amount Loss: $152.50
+Current Balance: $1190.12
+Game Played: 3
+Total Amount Won: $835.00
+Total Amount Loss: $644.88
