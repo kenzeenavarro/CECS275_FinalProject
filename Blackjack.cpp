@@ -20,7 +20,8 @@
 #include <cstdlib>
 #include <iomanip>
 // update split and vector of char cards 
-// update games played
+
+// split fixx
 using namespace std;
     void Blackjack::startGame() const{
         string decision;
@@ -250,6 +251,20 @@ using namespace std;
         ofstream.precision(2);
         ofstream << "Total Amount Won"<< ": $"<< fixed<<total_won<< endl;
         ofstream << "Total Amount Loss"<< ": $"<<total_loss << endl;    
+    }
+    void Blackjack::displayaccount() const{         // updating account.txt file with info
+
+        // fstream ofstream;
+        // ofstream.open("account.txt", ios::out);
+        // map<string, float>::iterator it;
+        cout << "Account Number"<< ": "<< account_num << endl;
+        cout.precision(2);
+        cout << "Current Balance"<< ": $"<<fixed<< balance << endl;
+        cout.precision(0);
+        cout << "Game Played"<< ": "<<games_played << endl;
+        cout.precision(2);
+        cout << "Total Amount Won"<< ": $"<< fixed<<total_won<< endl;
+        cout << "Total Amount Loss"<< ": $"<<total_loss << endl;    
     }
  
     

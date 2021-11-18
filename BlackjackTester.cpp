@@ -42,7 +42,7 @@ int main(){
                     blackjack.new_game();
                 }   
         }
-        return 0;
+        blackjack.displayaccount();
 
         
 }

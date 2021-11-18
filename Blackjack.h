@@ -55,6 +55,7 @@ class Blackjack{
         int randnum() const;
         void determine_winner(Person &) const;
         void new_game() const;
+        void displayaccount() const;
 
 
 
@@ -74,9 +75,9 @@ class Blackjack{
         mutable Person numbers_dealer;
         
 
-        mutable vector<char> numbers_player_value;
-        mutable vector<char> numbers_player_split_value;
-        mutable vector<char> numbers_dealer_value;
+        // mutable vector<char> numbers_player_value;
+        // mutable vector<char> numbers_player_split_value;
+        // mutable vector<char> numbers_dealer_value;
 
 
         // void update_sum_player() const;
@@ -88,6 +89,7 @@ class Blackjack{
         void decision_choice(Person &) const;
         //void update_sum_player_split() const;
         void update_sum(Person &) const;
+        
         
         
 
