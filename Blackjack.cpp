@@ -52,9 +52,6 @@ using namespace std;
         numbers_player.char_value.erase(numbers_player.char_value.begin(),numbers_player.char_value.end());
         numbers_dealer.char_value.erase(numbers_dealer.char_value.begin(),numbers_dealer.char_value.end());
         numbers_player_split.char_value.erase(numbers_player_split.char_value.begin(),numbers_player_split.char_value.end());
-
-
-
     }
 
     Blackjack::Blackjack(){  
@@ -86,8 +83,10 @@ using namespace std;
         account_num = info.at(0);
         balance = stof(info.at(1));
         games_played = 0;
-        total_loss = stof(info.at(4));
-        total_won = stof(info.at(3));
+        //total_loss = stof(info.at(4));
+        //total_won = stof(info.at(3));
+        total_loss = 0;
+        total_won = 0;
 
         for(int y=0; y<account_num.size();y++){                     // erasing weird space in account_num 
                 if(account_num[y] == ' '){
@@ -100,17 +99,18 @@ using namespace std;
     void Blackjack::decision_choice(Person &person) const{
         string decision = HitStandSplit();
         transform(decision.begin(), decision.end(), decision.begin(),[](unsigned char c){ return std::tolower(c); });  // lower case decision string
+    
 
-        if(decision == "hit"){
-            this->hit(person);
-        }
-        else if(decision=="stand"){
-            this->stand();
-        }
-        else if(decision == "split"){
-            this->split();
-        }
-        
+            if(decision == "hit"){
+                this->hit(person);
+            }
+            else if(decision=="stand"){
+                this->stand();
+            }
+            else if(decision == "split"){
+                this->split();
+            }
+            
     }
     void Blackjack::determine_winner(Person &person) const{
         // determininfg winner comparing sums of player and dealer
@@ -161,7 +161,12 @@ using namespace std;
     string Blackjack::HitStandSplit() const{
         // asking if hit stand or split and getting decision
         string decision;
-        cout << "Hit Stand or Split?"<<endl;
+        if(numbers_player_split.hand.size() == 0){
+            cout << "Hit Stand or Split?"<<endl;
+        }
+        else{
+            cout << "Hit or Stand"<<endl;
+        }
         cin >> decision;
         return decision;
     }
@@ -197,7 +202,9 @@ using namespace std;
         // reveal everyones hands
         this->reveal_hand("dealer",numbers_dealer);
         this->reveal_hand("player",numbers_player);
-        this->reveal_hand("split",numbers_player_split);
+        if(numbers_player_split.hand.size() != 0){
+            this->reveal_hand("split",numbers_player_split);
+        }
     }
     void Blackjack::split() const{
         this->add_cards(2,numbers_player_split);                  // adding 2 cards to split hand vector
