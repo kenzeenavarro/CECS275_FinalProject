@@ -18,6 +18,7 @@
 #include <cctype>
 #include <ctime>
 #include <cstdlib>
+#include <iomanip>
 // update split and vector of char cards 
 // update games played
 using namespace std;
@@ -253,8 +254,17 @@ using namespace std;
  
     
     void Blackjack::show_one_Dealer()const{
-        cout << "Dealers Card: "<<numbers_dealer.hand.at(0)<<endl;
+        cout << "Dealer's cards: " << endl;
+        cout << "----------" << endl;
+        cout << "| " << numbers_dealer.hand.at(0) << setw(7) << "|" << endl;
+        cout << "|" << setw(9) << "|" << endl;
+        cout << "|" << setw(9) << "|" << endl;
+        cout << "|" << setw(9) << "|" << endl;
+        cout << "|" << setw(9) << "|" << endl;
+        cout << "|" << setw(8) << numbers_dealer.hand.at(0) << "|" << endl;
+        cout << "----------" << endl;
     }
+
     int Blackjack::randnum() const{
         srand((unsigned) time(0));
         int randomNumber;
@@ -288,7 +298,15 @@ using namespace std;
                 cout << "10" << " ";
             }
             else{
-                cout << person_hand.char_value.at(i) << " ";
+                cout << endl;
+                cout << "----------" << endl;
+                cout << "| " << person_hand.char_value.at(i) << setw(7) << "|" << endl;
+                cout << "|" << setw(9) << "|" << endl;
+                cout << "|" << setw(9) << "|" << endl;
+                cout << "|" << setw(9) << "|" << endl;
+                cout << "|" << setw(9) << "|" << endl;
+                cout << "|" << setw(8) << person_hand.char_value.at(i) << "|" << endl;
+                cout << "----------" << endl;
             }
             
         }
