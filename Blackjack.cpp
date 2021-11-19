@@ -144,7 +144,8 @@ using namespace std;
         else if(numbers_dealer.sum > 21 & person.sum <22){
             cout << "you win"<<endl;
         }
-        else if(numbers_dealer.sum > 21 & person.sum > 21)
+        else if(numbers_dealer.sum > 21 & person.sum > 21){
+
             if(numbers_dealer.sum < sum_player){
                 cout << "dealer wins"<<endl;
                 bet_money = bet_money * -1;
@@ -154,6 +155,18 @@ using namespace std;
                 cout << "you win."<<endl;
                 updateBalance();
             }
+        }
+        else if(numbers_dealer.sum == 21 & person.sum != 21){
+            cout << "dealer wins"<<endl;
+            bet_money = bet_money * -1;
+            updateBalance();
+
+        }
+        else if(numbers_dealer.sum != 21 & person.sum == 21){
+            cout << "you win."<<endl;
+            updateBalance();
+        }
+
     }
     void Blackjack::setBet(float bet) const{
         // setting bet_money variable
@@ -209,23 +222,51 @@ using namespace std;
         }
     }
     void Blackjack::split() const{
-        this->add_cards(2,numbers_player_split);                  // adding 2 cards to split hand vector
-        this->show_one_Dealer();                                  // reveal one of dealers cards        
-        this->reveal_hand("player",numbers_player);
-        this->reveal_hand("split",numbers_player_split);
 
 
-        cout << "Hand Two: ";
-        this->decision_choice(numbers_player_split); 
-        this->update_sum(numbers_player_split);
-        this->determine_winner(numbers_player_split); 
+        if(numbers_player.char_value.at(0) == numbers_player.char_value.at(1)){
+            int temp = numbers_player.hand.at(1);
+            char tmp = numbers_player.char_value.at(1);
+
+            numbers_player.char_value.pop_back();
+            numbers_player.hand.pop_back();
 
 
 
-        this->update_sum(numbers_player);
-        cout << "Hand One: ";
-        this->reveal_hand("player",numbers_player);
-        this->decision_choice(numbers_player);          
+            this->add_cards(1,numbers_player_split);                  // adding 2 cards to split hand vector
+            numbers_player_split.hand.push_back(temp);  
+            numbers_player_split.char_value.push_back(tmp);  
+
+            this->add_cards(1,numbers_player); 
+
+            this->show_one_Dealer();                                  // reveal one of dealers cards        
+            this->reveal_hand("player",numbers_player);
+            this->reveal_hand("split",numbers_player_split);
+
+
+            cout << "Hand Two: ";
+            this->decision_choice(numbers_player_split); 
+            this->update_sum(numbers_player_split);
+            this->determine_winner(numbers_player_split); 
+
+
+
+            this->update_sum(numbers_player);
+            //cout << "Hand One: ";
+            this->reveal_hand("player",numbers_player);
+            this->decision_choice(numbers_player);          
+
+
+        }
+        else{
+            cout << "Cant Split. Two different cards."<<endl;
+            this-> HitStandSplit();
+        }
+
+
+
+
+        
     }
 
     void Blackjack::updateBalance() const{   
@@ -269,7 +310,7 @@ using namespace std;
  
     
     void Blackjack::show_one_Dealer()const{
-        cout << "Dealer's cards: " << endl;
+        cout << "Dealer's card: " << endl;
         cout << "----------" << endl;
         cout << "| " << numbers_dealer.hand.at(0) << setw(7) << "|" << endl;
         cout << "|" << setw(9) << "|" << endl;
@@ -302,15 +343,23 @@ using namespace std;
             cout << "Dealers Cards: ";
         }
         else if(person == "player"){
-            cout << "Your Cards: ";
+            cout << "Hand One: ";
         }
         else if(person == "split"){
-            cout << "Your Other Cards: ";
+            cout << "Hand Two: ";
         }
 
         for(int i=0;i<person_hand.char_value.size();i++){
             if(person_hand.char_value.at(i) == 'T'){
-                cout << "10" << " ";
+                cout << endl;
+                cout << "----------" << endl;
+                cout << "|" << "10" << setw(7) << "|" << endl;
+                cout << "|" << setw(9) << "|" << endl;
+                cout << "|" << setw(9) << "|" << endl;
+                cout << "|" << setw(9) << "|" << endl;
+                cout << "|" << setw(9) << "|" << endl;
+                cout << "|" << setw(8) << "10" << "|" << endl;
+                cout << "----------" << endl;
             }
             else{
                 cout << endl;
